@@ -1,0 +1,76 @@
+<!-- <table class="tg">
+    <tr>
+      <th>Index</th>
+      <th>Id</th>
+      <th>Name</th>
+    </tr>
+    <tr *ngFor="let item of p; let i = index" [ngStyle]="{'background-color':(i % 2 == 0)?'gray':'white'}" > 
+      <th class="tg-cly1">{{i}}</th>
+      <th class="tg-0lax">{{item.id}}</th>
+      <th class="tg-0lax">{{item.name}}</th>
+    </tr>
+  </table> -->
+<div class="center" style="text-align: center">
+        <input type="text" [(ngModel)]="busqueda" (input)="activateButton()" id="" (keydown.enter)="buscar()" placeholder="Pruba con ´Smart´">
+
+        <a name="" id="" class="btn btn-secondary" [class.disabled]="!activar" (click)="buscar()" href="#" role="button">Buscar</a>
+        <br>
+        <p *ngIf="activar">Buscando: {{busqueda}}</p>
+        <br>
+
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-secondary">
+                <input [(ngModel)]="existencia" type="checkbox" name="" id="ch1" autocomplete="off"> Sólo en existencia
+            </label> <br>
+            <label class="btn btn-secondary">
+                <input [(ngModel)]="ordenar" type="checkbox" name="" id="" autocomplete="off" (change) = "buscar()"> Precio menor a mayor
+            </label>
+            <label class="btn btn-secondary">
+                <input [(ngModel)]="ex3" type="checkbox" name="" id="" autocomplete="off" ng-ngModel="ex"> Existencia mayor a 3
+            </label>
+        </div>
+</div>
+
+<div class="alert alert-secondary center" role="alert" *ngIf="resBusqueda.length>=1" style="text-align: center">
+  <strong>Hay resultados!: {{resBusqueda.length}} encontrardos</strong> <br>
+  <span *ngIf="existencia">Sólo en existencia</span><br>
+        <span *ngIf="ordenar">Precio mayor a menor (se muestran de arriba a abajo, no izq-der!)</span> <br>
+        <span *ngIf="ex3">Existencia mayor a 3</span>
+</div>
+
+<div class="alert alert-primary" role="alert" *ngIf="resBusqueda.length<1" style="text-align: center">
+  <strong>No se encontraron resultados :( </strong>
+</div>
+
+
+<div class="container "
+  style="background: linear-gradient(to bottom right, #003973 0%, #4780ba 50%, rgb(216, 216, 169) 100%);">
+  <div id="lista" class="card-columns" style=" padding-top: 10px;">
+
+    <div class="card text-center" 
+    *ngFor="let producto of resBusqueda; let i = index" 
+    
+    [hidden]="existencia && producto.existencia == 0"
+    [ngStyle]="{'background-color':ex3 && producto.existencia < 2 ?'gray':'white'}" >
+      <div class="card-body" style="min-height:200px;  ">
+        <!-- max-height:200px; overflow:auto; -->
+        <h4 class="card-title">{{producto.nombre}} </h4>
+        <hr>
+
+        <img src="https://picsum.photos/id/2/100/100"
+          class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+        <p class="card-text">
+          <b>Marca: </b>{{producto.marca}} <br>
+          <b>Specs: </b>{{producto.descripcion}} <br>
+          <b>Existencia: </b>{{producto.existencia}} <br>
+        </p>
+        <a href="" class="stretched-link" onClick=""></a>
+      </div>
+
+      <div class="card-footer text-muted">
+        <h6>${{producto.precio}}0</h6>
+      </div>
+    </div>
+
+  </div>
+</div>
